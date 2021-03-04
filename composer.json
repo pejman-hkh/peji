@@ -1,0 +1,17 @@
+{
+    "name": "pejman/peji",
+    "type": "library",
+    "authors": [
+        {
+            "name": "pejman",
+            "email": "pejman.hkh@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Peji\\": "src/"
+        }
+    },
+    "license": "MIT"
+}
