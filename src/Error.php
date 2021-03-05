@@ -10,10 +10,10 @@ class Error extends Singleton {
 			if( ! file_exists( $mf )) {
 
 				file_put_contents( $mf, '<?php
-	namespace App\Model;
-	class '.$m[1].' extends \Peji\DB\Model {
-		var $table = \''.strtolower( $m[1]).'\';
-	}');
+namespace App\Model;
+class '.$m[1].' extends \Peji\DB\Model {
+	var $table = \''.strtolower( $m[1]).'\';
+}');
 
 				chmod( $mf, 0777);
 			}

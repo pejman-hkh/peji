@@ -19,6 +19,8 @@ class View extends Singleton {
 			$this->$k = $v;
 		}
 
+		extract( $this->set );
+
 		$path = $this->mainDir.'/'.$layout.'.html';
 		if(  file_exists( $path ) )
 			include( $path );
@@ -37,9 +39,8 @@ class View extends Singleton {
 		return $this->set;
 	}
 
-	protected function fetch( $dir ) {
-		//echo $this->mainDir.'/'.$this->set['dir'].'/'.$dir.'.html';
-
-		include( $this->mainDir.'/'.$this->set['dir'].'/'.$dir.'.html' );
+	protected function fetch( $adir ) {
+		extract( $this->set );
+		include( $this->mainDir.'/'.$this->set['dir'].'/'.$adir.'.html' );
 	}
 }
