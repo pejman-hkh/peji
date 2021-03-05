@@ -132,8 +132,13 @@ class Model {
 
 	public function getColumns( $cache = true ) {
 		$db = DB::$db;
-		if( @count($this->columns) > 0 && $cache )
+		if( \Peji\Cache::get('columns_'.$this->table) && $cache ) {
+			$this->columns = \Peji\Cache::get('columns_'.$this->table);
+			$this->columnsType = \Peji\Cache::get('columnsType_'.$this->table);
 			return;
+		}
+
+		file_put_contents('test.txt', "1\n", 11);
 
 		$columns = $db->prepare("SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '".$this->table."' and table_schema = '".DB::$name."'  ")->execute()->findAll();
 		foreach( $columns as $v ) {
@@ -141,6 +146,8 @@ class Model {
 			$this->columnsType[] = [ $v['COLUMN_NAME'],  $v['DATA_TYPE'] ];
 		}
 
+		\Peji\Cache::set('columns_'.$this->table, $this->columns );
+		\Peji\Cache::set('columnsType_'.$this->table, $this->columnsType );
 	}
 
 	public function delete() {
