@@ -43,7 +43,7 @@ class Model {
 				$type = 'TEXT';
 			}
 
-			if( $v == 'mobile' || $v == 'number' || $v == 'price' || preg_match('#id#', $v ) ) {
+			if( $v == 'date' || $v == 'mobile' || $v == 'number' || $v == 'price' || preg_match('#id#', $v ) ) {
 				$type = 'INT(11)';
 			}
 
@@ -165,6 +165,18 @@ class Model {
 			$this->getColumns();
 		}
 
+		if( count( $this->columns ) == 0 ) {
+			$this->columns[] = 'test';
+		}
+
+		if( count( $this->columns ) == 1 ) {
+			$pass = (array)$this;
+			unset( $pass['table'] );
+			unset( $pass['columns'] );
+			unset( $pass['columnsType'] );
+			$this->setIt( $pass );
+		}
+
 		$vals = [];
 		foreach( $this->columns as $v ) {
 			$type = gettype( $this->$v );
@@ -182,16 +194,13 @@ class Model {
 				$vals[] = (string)$this->$v;
 			}
 		}
-	
+
 		if( @$this->recordExists ) {
-		
 			$vals[] = $this->id;
 			$sql = "UPDATE `".$this->table."` SET ".'`'.implode('` = ?, `', $this->columns ).'` = ? '." WHERE id = ? ";
 
 		} else {
-
 			$sql = "INSERT INTO `".$this->table."`(".'`'.implode("` , `", @$this->columns ).'`'.") VALUES(".( str_repeat('?,', count( @$this->columns ) - 1 ).'?' ).")";
-
 		}
 		
 		$db->prepare( $sql )->execute( $vals );

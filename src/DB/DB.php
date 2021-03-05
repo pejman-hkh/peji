@@ -14,7 +14,7 @@ class DB {
 	}
 
 	public static function sql( $sql = "" ) {
-		$a = new dhc( new Model );
+		$a = new DHC( new Model );
 		return $a->sql( $sql );
 	}
 

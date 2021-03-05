@@ -14,7 +14,7 @@ namespace App\Model;
 class '.$m[1].' extends \Peji\DB\Model {
 	var $table = \''.strtolower( $m[1]).'\';
 }');
-
+				echo "We created it for you ! Please reload page.<br />";
 				chmod( $mf, 0777);
 			}
 

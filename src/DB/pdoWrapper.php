@@ -47,6 +47,7 @@ ALTER TABLE `'.$m[2].'`
 COMMIT;';
 
 			$this->db->prepare( $c )->execute();
+			echo "We created it for you ! Please reload page.<br />";
 		}
 
 		echo $err;
