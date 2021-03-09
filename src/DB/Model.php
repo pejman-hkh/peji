@@ -39,7 +39,7 @@ class Model {
 
 			if( in_array( $v , $this->columns ) )  continue;
 			$type = 'VARCHAR(255)';
-			if( $v == 'note' || $v == 'text' ) {
+			if( $v == 'note' || $v == 'text' || $v == 'desc' || $v == 'shortdesc' ) {
 				$type = 'TEXT';
 			}
 
@@ -137,8 +137,6 @@ class Model {
 			$this->columnsType = \Peji\Cache::get('columnsType_'.$this->table);
 			return;
 		}
-
-		file_put_contents('test.txt', "1\n", 11);
 
 		$columns = $db->prepare("SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '".$this->table."' and table_schema = '".DB::$name."'  ")->execute()->findAll();
 		foreach( $columns as $v ) {

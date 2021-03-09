@@ -20,7 +20,11 @@ class '.$m[1].' extends \Peji\DB\Model {
 
 		}
 
-		echo $e->getMessage();		
+		echo $e->getMessage();	
+		echo "<br />";	
+		echo 'In file '.$e->getFile();		
+		echo "<br />";	
+		echo 'In line '.$e->getLine();		
 	}
 }
 
