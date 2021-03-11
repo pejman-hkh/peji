@@ -138,6 +138,11 @@ class Model {
 			return;
 		}
 
+		if( ! $cache ) {
+			$this->columns = [];
+			$this->columnsType = [];
+		}
+
 		$columns = $db->prepare("SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '".$this->table."' and table_schema = '".DB::$name."'  ")->execute()->findAll();
 		foreach( $columns as $v ) {
 			$this->columns[] = $v['COLUMN_NAME'];
