@@ -82,11 +82,17 @@ class Model {
 		$this->$name = $value;
 	}
 
+	var $cacheGet;
+
 	public function __get($name) {
 		$a = 'get'.$name;
+		if( @$this->cacheGet[$a] ) {
+			return $this->cacheGet[$a];
+		}
 
 		if( method_exists($this, $a ) ) {
-			return $this->$a();
+			$this->cacheGet[$a] = $ret = $this->$a();
+			return $ret;
 		}
 
 		return @$this->$name;
