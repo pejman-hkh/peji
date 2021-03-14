@@ -79,6 +79,7 @@ class DHC {
 	public function paginate( $limit, $page = 1 ) {
 		$this->paginateData = [ $limit, $page ];
 		$c = (int)( $page * $limit - $limit );
+		$limit = (int)$limit;
 		$this->sql .= " limit ".($c > 0 ? $c : 0).", $limit";
 
 		return $this;
