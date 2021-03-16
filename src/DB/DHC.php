@@ -47,8 +47,8 @@ class DHC {
 
 		if( @count( $this->paginateData ) > 0 ) {
 			if( strtolower( substr( $this->sql, 0, 6 ) ) == 'select' ) {
-				$this->sql = substr( $this->sql, 6);
-				$this->sql = 'SELECT SQL_CALC_FOUND_ROWS '.$this->sql;
+				//$this->sql = substr( $this->sql, 6);
+				//$this->sql = 'SELECT SQL_CALC_FOUND_ROWS '.$this->sql;
 			}
 		}
 
@@ -56,8 +56,14 @@ class DHC {
 		$query = $this->db->prepare( $this->sql )->execute(@$bind);
 
 		if( @$this->paginateData ) {
-			$fetch = $this->db->prepare("SELECT FOUND_ROWS()")->execute()->fetch();
-			$this->count = @$fetch["FOUND_ROWS()"];
+			$csql = $this->sql;
+			$csql = substr($csql, strpos( $csql, 'from') );
+			$csql = substr($csql, 0, strpos( $csql, 'limit') );
+			$fetch = DB::sql( "select count(*) as count ".$csql )->findFirst();
+			$this->count = $fetch->count;
+	
+			//$fetch = $this->db->prepare("SELECT FOUND_ROWS()")->execute()->fetch();
+			//$this->count = @$fetch["FOUND_ROWS()"];
 		}
 
 		$ret = [];
