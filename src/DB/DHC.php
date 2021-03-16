@@ -59,7 +59,7 @@ class DHC {
 			$csql = $this->sql;
 			$csql = substr($csql, strpos( $csql, 'from') );
 			$csql = substr($csql, 0, strpos( $csql, 'limit') );
-			$fetch = DB::sql( "select count(*) as count ".$csql )->findFirst();
+			$fetch = DB::sql( "select count(*) as count ".$csql )->findFirst($bind);
 			$this->count = $fetch->count;
 	
 			//$fetch = $this->db->prepare("SELECT FOUND_ROWS()")->execute()->fetch();
