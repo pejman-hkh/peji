@@ -34,7 +34,7 @@ class pdoWrapper {
 
 		if( preg_match('#Table \'(\w+)\.(\w+)\' doesn\'t exist#is', $e->getMessage(), $m ) ) {
 		
-			$c = 'CREATE TABLE `'.$m[2].'` (
+	/*		$c = 'CREATE TABLE `'.$m[2].'` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_persian_ci;
 
@@ -47,7 +47,7 @@ ALTER TABLE `'.$m[2].'`
 COMMIT;';
 
 			$this->db->prepare( $c )->execute();
-			echo "We created it for you ! Please reload page.<br />";
+			echo "We created it for you ! Please reload page.<br />";*/
 		}
 
 		echo $err;

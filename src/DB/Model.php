@@ -98,7 +98,38 @@ class Model {
 		return @$this->$name;
 	}
 
-	public static function sql( $sql = '' ) {
+	public static function field( $fields = '' ) {
+	
+		$class = get_called_class();
+		$a = DHC::getInstance( $class );
+	
+		$o = self::getInstance( $class );
+
+		$sql = "select $fields from $o->table ".(@$sql?:"");
+		
+		return $a->sql( $sql, @$o->table, '' );
+	}
+
+	public static function where( $arr = '' ) {
+	
+		$class = get_called_class();
+		$a = DHC::getInstance( $class );
+	
+		$o = self::getInstance( $class );
+
+		$sql = "where 1 = 1 ";
+		$bind = [];
+		foreach( $arr as $k => $v ) {
+			$bind[] = $v;
+			$sql .= " and $k = ? ";
+		}
+
+		$sql = "select * from $o->table ".($sql?:"");
+		
+		return $a->sql( $sql, @$o->table, '', $bind );
+	}
+
+	public static function sql( $sql = '', $bind = [] ) {
 		$msql = $sql;
 		$class = get_called_class();
 		$a = DHC::getInstance( $class );
@@ -109,7 +140,7 @@ class Model {
 			$sql = "select * from $o->table ".($sql?:"");
 		}
 
-		return $a->sql( $sql, @$o->table, $msql );
+		return $a->sql( $sql, @$o->table, $msql, $bind );
 	}
 
 	public static function find( $arr = [] ) {
@@ -120,7 +151,7 @@ class Model {
 		if( is_array( $arr ) ) {
 			return $a->sql( "select * from $o->table ".@$arr[0] )->find( @$arr['bind'] );
 		} else {
-			return $a->sql( "select * from $o->table where id = ? " )->find( [@$arr] )[0];
+			return @$a->sql( "select * from $o->table where id = ? " )->find( [@$arr] )[0];
 
 		}
 	}
